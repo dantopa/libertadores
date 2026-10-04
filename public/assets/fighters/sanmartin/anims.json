@@ -1,11 +1,11 @@
 {
  "canvas": [
   1260,
-  567
+  756
  ],
  "anchor": [
   630,
-  555
+  744
  ],
  "standHeight": 420,
  "anims": {
@@ -41,6 +41,24 @@
     6
    ],
    "loop": false
+  },
+  "counter": {
+   "frames": [
+    "anims/counter/00.webp",
+    "anims/counter/01.webp",
+    "anims/counter/02.webp"
+   ],
+   "durations": [
+    6,
+    6,
+    8
+   ],
+   "loop": false,
+   "phases": [
+    "startup",
+    "active",
+    "recovery"
+   ]
   },
   "crouch": {
    "frames": [
@@ -110,6 +128,28 @@
     "recovery",
     "recovery"
    ]
+  },
+  "dazed": {
+   "frames": [
+    "anims/dazed/00.webp",
+    "anims/dazed/01.webp"
+   ],
+   "durations": [
+    30,
+    30
+   ],
+   "loop": true
+  },
+  "dead": {
+   "frames": [
+    "anims/dead/00.webp",
+    "anims/dead/01.webp"
+   ],
+   "durations": [
+    60,
+    60
+   ],
+   "loop": false
   },
   "getup": {
    "frames": [

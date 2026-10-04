@@ -57,10 +57,13 @@
   "anims": [
    "air_attack",
    "block",
+   "counter",
    "crouch",
    "crouch_block",
    "crouch_heavy",
    "crouch_light",
+   "dazed",
+   "dead",
    "getup",
    "heavy",
    "hit_high",
