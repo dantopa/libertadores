@@ -34,10 +34,10 @@ CLIPS = {
 # frame counts requested in the ChatGPT prompt (used to split strips whose frames touch each other)
 COUNTS = {'idle': 6, 'walk_fwd': 6, 'walk_back': 6, 'crouch': 3, 'jump': 4, 'block': 4, 'crouch_block': 2, 'light': 4,
           'heavy': 6, 'crouch_light': 4, 'crouch_heavy': 5, 'air_attack': 3, 'hit_high': 3, 'knockdown': 5, 'getup': 3,
-          'special_cast': 5, 'rush': 4, 'throw': 4, 'turn': 3, 'win': 5}
+          'special_cast': 5, 'rush': 4, 'throw': 4, 'turn': 3, 'win': 5, 'counter': 3, 'dazed': 2, 'dead': 2}
 # ChatGPT does not keep the figure size between strips: per-clip size correction relative to idle
 # (measured as the median face height of upright frames vs idle; tilted/lying poses give no reliable reading)
-SCALE = {'block': 0.80, 'crouch': 0.73, 'hit_high': 0.73, 'air_attack': 0.79, 'jump': 0.88, 'crouch_block': 0.69, 'getup': 0.80, 'turn': 0.78}
+SCALE = {'block': 0.80, 'crouch': 0.73, 'hit_high': 0.73, 'air_attack': 0.79, 'jump': 0.88, 'crouch_block': 0.69, 'getup': 0.80, 'turn': 0.78, 'counter': 0.85, 'dazed': 0.64, 'dead': 0.81}
 ap = argparse.ArgumentParser()
 ap.add_argument('char'); ap.add_argument('src'); ap.add_argument('--config')
 ap.add_argument('--height', type=int, default=420, help='output standing height px (idle)')
@@ -159,7 +159,7 @@ for p in sorted(src.glob('*.png')):
 if 'idle' not in clips: sys.exit('idle.png is required (scale reference)')
 idle_h = float(np.median([f.height for f, _ in clips['idle'][0]]))
 sc = a.height / idle_h
-CW, CH = int(a.height * 3.0), int(a.height * 1.35)
+CW, CH = int(a.height * 3.0), int(a.height * 1.8)  # headroom: raised-sword poses are ~1.5x the idle height
 AX, AY = CW // 2, CH - 12
 import shutil
 if (dst / 'anims').exists(): shutil.rmtree(dst / 'anims')
