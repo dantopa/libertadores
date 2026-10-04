@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "libertadores",
+  "project_id": "2e593fc8-57b7-404b-8240-29dd2c7056f8"
+}
