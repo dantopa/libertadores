@@ -11,6 +11,9 @@ import numpy as np
 from PIL import Image, ImageFilter
 
 S, A, R = 'startup', 'active', 'recovery'
+STRAY_MAX = 0.03  # loose objects lighter than this fraction of the frame's figure ...
+STRAY_NEAR = 9    # ... and farther than ~4 half-res px from it are dropped
+GLUE = 15  # px (half-res) dilation that glues blade-tip fragments back to their figure
 # clip: (ticks per frame list or single int, loop, phases or None)
 CLIPS = {
     'idle': (8, True, None), 'walk_fwd': (6, True, None), 'walk_back': (7, True, None),
@@ -131,6 +134,33 @@ def _frames(rgba, A_, segs):
             m = np.kron((lab == cid).astype(np.uint8), np.ones((f, f), np.uint8)).astype(bool)
             m = m[:A_.shape[0], :s1 - s0] if m.shape[1] >= s1 - s0 else np.pad(m, ((0, 0), (0, s1 - s0 - m.shape[1])))[:A_.shape[0]]
             region = own[:, s0:s1]; region[m & A_[:, s0:s1]] = to
+    # whole objects: a figure plus its detached blade tip / cape fragments (glued by a wide dilation) belong to ONE
+    # frame; only objects that really touch another figure keep the column cut
+    near = np.asarray(Image.fromarray((small * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(GLUE))) > 0
+    lab, comps = _components(near)
+    for cid, n, xa, xb in comps:
+        obj = lab == cid
+        mass = [int((small & obj)[:, s0 // f:(s1 + f - 1) // f].sum()) for s0, s1 in segs]
+        order = sorted(range(len(segs)), key=lambda k: -mass[k])
+        if len(order) < 2 or mass[order[1]] >= 0.3 * mass[order[0]]: continue
+        m = np.kron(obj.astype(np.uint8), np.ones((f, f), np.uint8)).astype(bool)
+        m = np.pad(m, ((0, max(0, A_.shape[0] - m.shape[0])), (0, max(0, A_.shape[1] - m.shape[1]))))[:A_.shape[0], :A_.shape[1]]
+        own[m & A_ & (own >= 0)] = order[0]
+    # what is still loose (thin streaks of the previous frame's blade, stray arcs) is not part of the figure: per frame,
+    # drop light objects that are not touching the figure (fragments of a broken blade tip sit 1-2 px away from it)
+    for k in range(len(segs)):
+        mine = A_ & (own == k)
+        # dilate before subsampling: 1-2 px streaks would vanish at half resolution
+        grown = np.asarray(Image.fromarray((mine * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(5))) > 0
+        lab_k, comps_k = _components(grown[::f, ::f])
+        if len(comps_k) < 2: continue
+        main = max(comps_k, key=lambda c: c[1])
+        near_main = np.asarray(Image.fromarray(((lab_k == main[0]) * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(STRAY_NEAR))) > 0
+        for cid, n, xa, xb in comps_k:
+            if cid == main[0] or n >= STRAY_MAX * main[1] or (near_main & (lab_k == cid)).any(): continue
+            m = np.kron((lab_k == cid).astype(np.uint8), np.ones((f, f), np.uint8)).astype(bool)
+            m = np.pad(m, ((0, max(0, A_.shape[0] - m.shape[0])), (0, max(0, A_.shape[1] - m.shape[1]))))[:A_.shape[0], :A_.shape[1]]
+            own[m & mine] = -1
     arr = np.asarray(rgba)
     frames = []
     for k in range(len(segs)):
