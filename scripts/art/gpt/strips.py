@@ -35,9 +35,13 @@ CLIPS = {
 COUNTS = {'idle': 6, 'walk_fwd': 6, 'walk_back': 6, 'crouch': 3, 'jump': 4, 'block': 4, 'crouch_block': 2, 'light': 4,
           'heavy': 6, 'crouch_light': 4, 'crouch_heavy': 5, 'air_attack': 3, 'hit_high': 3, 'knockdown': 5, 'getup': 3,
           'special_cast': 5, 'rush': 4, 'throw': 4, 'turn': 3, 'win': 5}
+# ChatGPT does not keep the figure size between strips: per-clip size correction relative to idle
+# (measured as the median face height of upright frames vs idle; tilted/lying poses give no reliable reading)
+SCALE = {'block': 0.80, 'crouch': 0.73, 'hit_high': 0.73, 'air_attack': 0.79, 'jump': 0.88, 'crouch_block': 0.69, 'getup': 0.80, 'turn': 0.78}
 ap = argparse.ArgumentParser()
 ap.add_argument('char'); ap.add_argument('src'); ap.add_argument('--config')
 ap.add_argument('--height', type=int, default=420, help='output standing height px (idle)')
+ap.add_argument('--out', help='output dir (default public/assets/fighters/<char>); use a temp dir to preview')
 a = ap.parse_args()
 cfg = json.load(open(a.config)) if a.config else {}
 
@@ -141,8 +145,8 @@ def _frames(rgba, A_, segs):
         frames.append((fr, footx))
     return frames
 
-root = Path(__file__).resolve().parents[2]
-dst = root / 'public' / 'assets' / 'fighters' / a.char
+root = Path(__file__).resolve().parents[3]
+dst = Path(a.out) if a.out else root / 'public' / 'assets' / 'fighters' / a.char
 src = Path(a.src)
 clips = {}
 for p in sorted(src.glob('*.png')):
@@ -167,10 +171,11 @@ for name, (frames, ticks, loop, phases) in clips.items():
     tl = ticks if isinstance(ticks, list) else [ticks] * n
     tl = (tl + [tl[-1]] * n)[:n]
     ph = (phases + [phases[-1]] * n)[:n] if phases else None
+    clip_sc = sc * SCALE.get(name, 1.0)
     for k, (fr, footx) in enumerate(frames):
-        fr = fr.resize((max(1, int(fr.width * sc)), max(1, int(fr.height * sc))), Image.LANCZOS)
+        fr = fr.resize((max(1, int(fr.width * clip_sc)), max(1, int(fr.height * clip_sc))), Image.LANCZOS)
         lying = fr.height < 0.6 * a.height and fr.width > fr.height
-        ax = fr.width / 2 if lying else footx * sc
+        ax = fr.width / 2 if lying else footx * clip_sc
         can = Image.new('RGBA', (CW, CH), (0, 0, 0, 0))
         x, y = int(round(AX - ax)), AY - fr.height
         if y < 0: fr = fr.crop((0, -y, fr.width, fr.height)); y = 0
