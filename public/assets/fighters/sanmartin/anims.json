@@ -1,66 +1,46 @@
 {
  "canvas": [
-  1000,
-  440
+  1260,
+  567
  ],
  "anchor": [
-  500,
-  430
+  630,
+  555
  ],
- "standHeight": 310,
+ "standHeight": 420,
  "anims": {
-  "idle": {
+  "air_attack": {
    "frames": [
-    "anims/idle/00.webp",
-    "anims/idle/01.webp",
-    "anims/idle/02.webp",
-    "anims/idle/03.webp",
-    "anims/idle/04.webp",
-    "anims/idle/05.webp",
-    "anims/idle/06.webp"
+    "anims/air_attack/00.webp",
+    "anims/air_attack/01.webp",
+    "anims/air_attack/02.webp"
    ],
    "durations": [
-    8,
-    8,
-    8,
-    8,
-    8,
+    4,
     8,
     8
    ],
-   "loop": true
+   "loop": false,
+   "phases": [
+    "startup",
+    "active",
+    "recovery"
+   ]
   },
-  "walk_fwd": {
+  "block": {
    "frames": [
-    "anims/walk_fwd/00.webp",
-    "anims/walk_fwd/01.webp",
-    "anims/walk_fwd/02.webp",
-    "anims/walk_fwd/03.webp",
-    "anims/walk_fwd/04.webp"
+    "anims/block/00.webp",
+    "anims/block/01.webp",
+    "anims/block/02.webp",
+    "anims/block/03.webp"
    ],
    "durations": [
-    7,
-    7,
-    7,
-    7,
-    7
+    3,
+    4,
+    4,
+    6
    ],
-   "loop": true
-  },
-  "walk_back": {
-   "frames": [
-    "anims/walk_back/00.webp",
-    "anims/walk_back/01.webp",
-    "anims/walk_back/02.webp",
-    "anims/walk_back/03.webp"
-   ],
-   "durations": [
-    8,
-    8,
-    8,
-    8
-   ],
-   "loop": true
+   "loop": false
   },
   "crouch": {
    "frames": [
@@ -77,32 +57,161 @@
   },
   "crouch_block": {
    "frames": [
-    "anims/crouch_block/00.webp"
+    "anims/crouch_block/00.webp",
+    "anims/crouch_block/01.webp"
    ],
    "durations": [
+    6,
     6
    ],
    "loop": false
   },
-  "block": {
+  "crouch_heavy": {
    "frames": [
-    "anims/block/00.webp"
+    "anims/crouch_heavy/00.webp",
+    "anims/crouch_heavy/01.webp",
+    "anims/crouch_heavy/02.webp",
+    "anims/crouch_heavy/03.webp",
+    "anims/crouch_heavy/04.webp"
    ],
    "durations": [
+    5,
+    5,
+    4,
+    8,
+    8
+   ],
+   "loop": false,
+   "phases": [
+    "startup",
+    "startup",
+    "active",
+    "recovery",
+    "recovery"
+   ]
+  },
+  "crouch_light": {
+   "frames": [
+    "anims/crouch_light/00.webp",
+    "anims/crouch_light/01.webp",
+    "anims/crouch_light/02.webp",
+    "anims/crouch_light/03.webp"
+   ],
+   "durations": [
+    4,
+    4,
+    6,
     6
    ],
+   "loop": false,
+   "phases": [
+    "startup",
+    "active",
+    "recovery",
+    "recovery"
+   ]
+  },
+  "getup": {
+   "frames": [
+    "anims/getup/00.webp",
+    "anims/getup/01.webp",
+    "anims/getup/02.webp"
+   ],
+   "durations": [
+    8,
+    8,
+    8
+   ],
    "loop": false
+  },
+  "heavy": {
+   "frames": [
+    "anims/heavy/00.webp",
+    "anims/heavy/01.webp",
+    "anims/heavy/02.webp",
+    "anims/heavy/03.webp",
+    "anims/heavy/04.webp",
+    "anims/heavy/05.webp"
+   ],
+   "durations": [
+    6,
+    6,
+    4,
+    4,
+    8,
+    10
+   ],
+   "loop": false,
+   "phases": [
+    "startup",
+    "startup",
+    "active",
+    "active",
+    "recovery",
+    "recovery"
+   ]
+  },
+  "hit_high": {
+   "frames": [
+    "anims/hit_high/00.webp",
+    "anims/hit_high/01.webp",
+    "anims/hit_high/02.webp"
+   ],
+   "durations": [
+    4,
+    6,
+    8
+   ],
+   "loop": false
+  },
+  "idle": {
+   "frames": [
+    "anims/idle/00.webp",
+    "anims/idle/01.webp",
+    "anims/idle/02.webp",
+    "anims/idle/03.webp",
+    "anims/idle/04.webp",
+    "anims/idle/05.webp"
+   ],
+   "durations": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "loop": true
   },
   "jump": {
    "frames": [
     "anims/jump/00.webp",
     "anims/jump/01.webp",
-    "anims/jump/02.webp"
+    "anims/jump/02.webp",
+    "anims/jump/03.webp"
    ],
    "durations": [
     6,
     6,
+    6,
     6
+   ],
+   "loop": false
+  },
+  "knockdown": {
+   "frames": [
+    "anims/knockdown/00.webp",
+    "anims/knockdown/01.webp",
+    "anims/knockdown/02.webp",
+    "anims/knockdown/03.webp",
+    "anims/knockdown/04.webp"
+   ],
+   "durations": [
+    4,
+    6,
+    6,
+    8,
+    12
    ],
    "loop": false
   },
@@ -110,73 +219,13 @@
    "frames": [
     "anims/light/00.webp",
     "anims/light/01.webp",
-    "anims/light/02.webp"
+    "anims/light/02.webp",
+    "anims/light/03.webp"
    ],
    "durations": [
+    4,
     4,
     5,
-    8
-   ],
-   "loop": false,
-   "phases": [
-    "startup",
-    "active",
-    "recovery"
-   ]
-  },
-  "heavy": {
-   "frames": [
-    "anims/heavy/00.webp",
-    "anims/heavy/01.webp",
-    "anims/heavy/02.webp",
-    "anims/heavy/03.webp"
-   ],
-   "durations": [
-    6,
-    4,
-    4,
-    10
-   ],
-   "loop": false,
-   "phases": [
-    "startup",
-    "active",
-    "active",
-    "recovery"
-   ]
-  },
-  "crouch_heavy": {
-   "frames": [
-    "anims/crouch_heavy/00.webp",
-    "anims/crouch_heavy/01.webp",
-    "anims/crouch_heavy/02.webp",
-    "anims/crouch_heavy/03.webp"
-   ],
-   "durations": [
-    5,
-    5,
-    4,
-    10
-   ],
-   "loop": false,
-   "phases": [
-    "startup",
-    "startup",
-    "active",
-    "recovery"
-   ]
-  },
-  "special_cast": {
-   "frames": [
-    "anims/special_cast/00.webp",
-    "anims/special_cast/01.webp",
-    "anims/special_cast/02.webp",
-    "anims/special_cast/03.webp"
-   ],
-   "durations": [
-    8,
-    6,
-    6,
     8
    ],
    "loop": false,
@@ -208,78 +257,101 @@
     "recovery"
    ]
   },
-  "counter": {
+  "special_cast": {
    "frames": [
-    "anims/counter/00.webp",
-    "anims/counter/01.webp",
-    "anims/counter/02.webp"
+    "anims/special_cast/00.webp",
+    "anims/special_cast/01.webp",
+    "anims/special_cast/02.webp",
+    "anims/special_cast/03.webp",
+    "anims/special_cast/04.webp"
    ],
    "durations": [
-    6,
+    7,
+    7,
+    5,
     6,
     8
    ],
    "loop": false,
    "phases": [
     "startup",
+    "startup",
     "active",
+    "recovery",
     "recovery"
    ]
   },
-  "hit_high": {
+  "throw": {
    "frames": [
-    "anims/hit_high/00.webp",
-    "anims/hit_high/01.webp"
+    "anims/throw/00.webp",
+    "anims/throw/01.webp",
+    "anims/throw/02.webp",
+    "anims/throw/03.webp"
    ],
    "durations": [
-    5,
-    8
+    6,
+    6,
+    6,
+    10
+   ],
+   "loop": false,
+   "phases": [
+    "startup",
+    "active",
+    "recovery",
+    "recovery"
+   ]
+  },
+  "turn": {
+   "frames": [
+    "anims/turn/00.webp",
+    "anims/turn/01.webp",
+    "anims/turn/02.webp"
+   ],
+   "durations": [
+    2,
+    2,
+    2
    ],
    "loop": false
   },
-  "knockdown": {
+  "walk_back": {
    "frames": [
-    "anims/knockdown/00.webp",
-    "anims/knockdown/01.webp",
-    "anims/knockdown/02.webp",
-    "anims/knockdown/03.webp"
+    "anims/walk_back/00.webp",
+    "anims/walk_back/01.webp",
+    "anims/walk_back/02.webp",
+    "anims/walk_back/03.webp",
+    "anims/walk_back/04.webp",
+    "anims/walk_back/05.webp"
    ],
    "durations": [
-    4,
-    8,
-    8,
-    12
-   ],
-   "loop": false
-  },
-  "getup": {
-   "frames": [
-    "anims/getup/00.webp",
-    "anims/getup/01.webp"
-   ],
-   "durations": [
-    8,
-    8
-   ],
-   "loop": false
-  },
-  "dazed": {
-   "frames": [
-    "anims/dazed/00.webp"
-   ],
-   "durations": [
-    30
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
    ],
    "loop": true
   },
-  "dead": {
+  "walk_fwd": {
    "frames": [
-    "anims/dead/00.webp"
+    "anims/walk_fwd/00.webp",
+    "anims/walk_fwd/01.webp",
+    "anims/walk_fwd/02.webp",
+    "anims/walk_fwd/03.webp",
+    "anims/walk_fwd/04.webp",
+    "anims/walk_fwd/05.webp"
    ],
    "durations": [
-    60
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
    ],
-   "loop": false
+   "loop": true
   },
   "win": {
    "frames": [
